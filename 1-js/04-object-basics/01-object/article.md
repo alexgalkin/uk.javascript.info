@@ -5,56 +5,56 @@
 
 На відміну від цього, об'єкти використовуються для зберігання набору ключів з різними даними і складніших сутностей. У JavaScript об'єкти проникають майже в кожен аспект мови. Тому ми повинні спочатку їх розібрати, перш ніж поглибитись далі.
 
-Об'єкт можна створити за допомогою фігурних дужок `{…}` з необов’язковим списком *властивостей*. Властивість - це пара "ключ: значення", де `ключом` є рядок (який називають "назвою властивості"), і будь чим є `значення`.
+Об'єкт можна створити за допомогою фігурних дужок `{…}` з необов'язковим списком *властивостей*. Властивість - це пара "ключ: значення", де `ключем` є рядок (який називають "назвою властивості"), і будь чим є `значення`.
 
-We can imagine an object as a cabinet with signed files. Every piece of data is stored in its file by the key. It's easy to find a file by its name or add/remove a file.
+Ми можемо уявити об'єкт шафою із підписаними файлами. Кожен фрагмент даних зберігається у своєму файлі за вказаним ключем. Легко знайти файл за його назвою або додати / видалити файл.
 
 ![](object.svg)
 
-An empty object ("empty cabinet") can be created using one of two syntaxes:
+Порожній об'єкт ("порожню шафу") можна створити за допомогою одного з двох синтаксисів:
 
 ```js
-let user = new Object(); // "object constructor" syntax
-let user = {};  // "object literal" syntax
+let user = new Object(); // синтаксис "конструктора об’єкта"
+let user = {};  // синтаксис "об'єктного літералу"
 ```
 
 ![](object-user-empty.svg)
 
-Usually, the figure brackets `{...}` are used. That declaration is called an *object literal*.
+Зазвичай використовують фігурні дужки `{...}`. Таке оголошення називається *об'єктним літералом*.
 
-## Literals and properties
+## Літерали і властивості
 
-We can immediately put some properties into `{...}` as "key: value" pairs:
+Ми можемо відразу вказати деякі властивості в `{...}` за допомогою пар "ключ: значення":
 
 ```js
-let user = {     // an object
-  name: "John",  // by key "name" store value "John"
-  age: 30        // by key "age" store value 30
+let user = {     // об'єкт
+  name: "John",  // ім'я "John" зберігається за ключем "name"
+  age: 30        // 30 зберігається за ключем "age"
 };
 ```
 
-A property has a key (also known as "name" or "identifier") before the colon `":"` and a value to the right of it.
+Властивість має ключ (також відомий, як "ім'я" або "ідентифікатор") перед двокрапкою `":"` і значення після неї.
 
-In the `user` object, there are two properties:
+Об'єкт `user` має дві властивості:
 
-1. The first property has the name `"name"` and the value `"John"`.
-2. The second one has the name `"age"` and the value `30`.
+1. Перша властивість має ім'я `"name"` і значення `"John"`.
+2. Друга властивість має ім'я `"age"` і значення `30`.
 
-The resulting `user` object can be imagined as a cabinet with two signed files labeled "name" and "age".
+Готовий об'єкт можна уявити шафою з двома підписаними файлами, які мають назву "name" та "age".
 
 ![user object](object-user.svg)
 
-We can add, remove and read files from it any time.
+Ми можемо додавати, видаляти і читати файли з цієї шафи у будь-який час.
 
-Property values are accessible using the dot notation:
+Для доступу до значень властивостей використовується крапка:
 
 ```js
-// get property values of the object:
+// отримати значення властивостей об'єкта:
 alert( user.name ); // John
 alert( user.age ); // 30
 ```
 
-The value can be of any type. Let's add a boolean one:
+Значення може бути будь-якого типу. Додамо булеве значення:
 
 ```js
 user.isAdmin = true;
@@ -62,7 +62,7 @@ user.isAdmin = true;
 
 ![user object 2](object-user-isadmin.svg)
 
-To remove a property, we can use `delete` operator:
+Для видалення властивості ми може використовувати оператор `delete`:
 
 ```js
 delete user.age;
@@ -70,70 +70,70 @@ delete user.age;
 
 ![user object 3](object-user-delete.svg)
 
-We can also use multiword property names, but then they must be quoted:
+Ми також можемо використовувати кілька слів, але тоді нам потрібно брати їх у лапки:
 
 ```js
 let user = {
   name: "John",
   age: 30,
-  "likes birds": true  // multiword property name must be quoted
+  "likes birds": true  // властивість з кількома словами взята у лапки
 };
 ```
 
 ![](object-user-props.svg)
 
 
-The last property in the list may end with a comma:
+Остання властивість у списку може закінчуватись комою:
 ```js
 let user = {
   name: "John",
   age: 30*!*,*/!*
 }
 ```
-That is called a "trailing" or "hanging" comma. Makes it easier to add/remove/move around properties, because all lines become alike.
+Вона називається "останньою" або "висячою" комою. Її використання робить додавання/видалення/переміщення властивостей легшим, тому що структура рядків залишається однаковою.
 
-## Square brackets
+## Квадратні дужки
 
-For multiword properties, the dot access doesn't work:
+Для властивостей, що містять кілька слів, доступ за допомогою крапки не працює:
 
 ```js run
-// this would give a syntax error
+// це призведе до синтаксичної помилки
 user.likes birds = true
 ```
 
-JavaScript doesn't understand that. It thinks that we address `user.likes`, and then gives a syntax error when comes across unexpected `birds`.
+JavaScript такого не розуміє. Він гадає, що ми звертаємось до `user.likes`, і повідомляє про синтаксичну помилку, коли далі неочікувано зустрічає `birds`.
 
-The dot requires the key to be a valid variable identifier. That implies: contains no spaces, doesn't start with a digit and doesn't include special characters (`$` и `_` are allowed).
+Використання крапки вимагає коректного ідентифікатору змінної. Це означає: жодних пробілів, не починати назву з числа і не використовувати спеціальні символи (дозволяється використовувати `$` та `_`).
 
-There's an alternative "square bracket notation" that works with any string:
+Існує альтернативний спосіб з "квадратними дужками", який працює з будь-яким рядком:
 
 ```js run
 let user = {};
 
-// set
+// встановити
 user["likes birds"] = true;
 
-// get
+// отримати
 alert(user["likes birds"]); // true
 
-// delete
+// видалити
 delete user["likes birds"];
 ```
 
-Now everything is fine. Please note that the string inside the brackets is properly quoted (any type of quotes will do).
+Тепер все добре. Зверніть увагу, що рядок у дужках взятий у лапки належним чином (підійде будь-який тип лапок).
 
-Square brackets also provide a way to obtain the property name as the result of any expression -- as opposed to a literal string -- like from a variable as follows:
+Квадратні дужки також дозволяють отримати ім'я властивості у якості результату будь-якого виразу - на відміну від літерального рядка - наприклад, із змінної:
 
 ```js
 let key = "likes birds";
 
-// same as user["likes birds"] = true;
+// так само, як user["likes birds"] = true;
 user[key] = true;
 ```
 
-Here, the variable `key` may be calculated at run-time or depend on the user input. And then we use it to access the property. That gives us a great deal of flexibility.
+Тут змінна `key` може бути обчислена під час виконання або залежати від введення користувача. А потім ми використовуємо її для доступу до властивості. Це дає нам велику гнучкість.
 
-For instance:
+Наприклад:
 
 ```js run
 let user = {
@@ -141,13 +141,13 @@ let user = {
   age: 30
 };
 
-let key = prompt("What do you want to know about the user?", "name");
+let key = prompt("Що ви бажаєте дізнатись про користувача?", "name");
 
-// access by variable
-alert( user[key] ); // John (if enter "name")
+// доступ за допомогою змінної
+alert( user[key] ); // John (якщо ми ввели "name")
 ```
 
-The dot notation cannot be used in a similar way:
+Спосіб з крапкою не можна так само використати:
 
 ```js run
 let user = {
@@ -159,40 +159,40 @@ let key = "name";
 alert( user.key ) // undefined
 ```
 
-### Computed properties
+### Обчислені властивості
 
-We can use square brackets in an object literal. That's called *computed properties*.
+Ми можемо використовувати квадратні дужки в об'єктному літералі. Властивості в такому випадку називають *обчисленими*.
 
-For instance:
+Наприклад:
 
 ```js run
-let fruit = prompt("Which fruit to buy?", "apple");
+let fruit = prompt("Який фрукт купити?", "apple");
 
 let bag = {
 *!*
-  [fruit]: 5, // the name of the property is taken from the variable fruit
+  [fruit]: 5, // ім'я властивості береться зі змінної fruit
 */!*
 };
 
-alert( bag.apple ); // 5 if fruit="apple"
+alert( bag.apple ); // 5 якщо fruit="apple"
 ```
 
-The meaning of a computed property is simple: `[fruit]` means that the property name should be taken from `fruit`.
+Значення обчислених властивостей просте: `[fruit]` означає, що ім'я властивості треба брати зі змінної `fruit`.
 
-So, if a visitor enters `"apple"`, `bag` will become `{apple: 5}`.
+Таким чином, якщо користувач введе `"apple"`, `bag` буде мати`{apple: 5}`.
 
-Essentially, that works the same as:
+По суті, це працює так само, як:
 ```js run
-let fruit = prompt("Which fruit to buy?", "apple");
+let fruit = prompt("Який фрукт купити?", "apple");
 let bag = {};
 
-// take property name from the fruit variable
+// взяти ім'я властивості зі змінної fruit
 bag[fruit] = 5;
 ```
 
-...But looks nicer.
+...Але має краще вигляд.
 
-We can use more complex expressions inside square brackets:
+Ми можемо використовувати складніші вирази всередині квадратних дужок:
 
 ```js
 let fruit = 'apple';
