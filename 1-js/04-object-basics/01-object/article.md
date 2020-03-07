@@ -1,11 +1,11 @@
 
-# Objects
+# Об'єкти
 
-As we know from the chapter <info:types>, there are seven data types in JavaScript. Six of them are called "primitive", because their values contain only a single thing (be it a string or a number or whatever).
+Як нам відомо з глави <info:types>, є сім типів даних в JavaScript. Шість з них називається "примітивами", тому що вони можуть мати лише один тип значення (чи то рядок, чи число, чи ще щось).
 
-In contrast, objects are used to store keyed collections of various data and more complex entities. In JavaScript, objects penetrate almost every aspect of the language. So we must understand them first before going in-depth anywhere else.
+На відміну від цього, об'єкти використовуються для зберігання набору ключів з різними даними і складніших сутностей. У JavaScript об'єкти проникають майже в кожен аспект мови. Тому ми повинні спочатку їх розібрати, перш ніж поглибитись далі.
 
-An object can be created with figure brackets `{…}` with an optional list of *properties*. A property is a "key: value" pair, where `key` is a string (also called a "property name"), and `value` can be anything.
+Об'єкт можна створити за допомогою фігурних дужок `{…}` з необов’язковим списком *властивостей*. Властивість - це пара "ключ: значення", де `ключом` є рядок (який називають "назвою властивості"), і будь чим є `значення`.
 
 We can imagine an object as a cabinet with signed files. Every piece of data is stored in its file by the key. It's easy to find a file by its name or add/remove a file.
 
