@@ -201,22 +201,22 @@ let bag = {
 };
 ```
 
-Square brackets are much more powerful than the dot notation. They allow any property names and variables. But they are also more cumbersome to write.
+Квадратні дужки набагато потужніші, ніж використання крапки. Вони дозволяють використовувати будь-які імена властивостей та змінних. Але вони ще й громіздкіші в написанні.
 
-So most of the time, when property names are known and simple, the dot is used. And if we need something more complex, then we switch to square brackets.
+Тому в більшості випадків, коли імена властивостей відомі та прості, використовується точка. А якщо нам потрібно щось складніше, то переходимо до використання квадратних дужок.
 
-## Property value shorthand
+## Скорочення значень властивостей
 
-In real code we often use existing variables as values for property names.
+У реальному коді ми часто використовуємо існуючі змінні як значення для імен властивостей.
 
-For instance:
+Наприклад:
 
 ```js run
 function makeUser(name, age) {
   return {
     name: name,
     age: age
-    // ...other properties
+    // ...інші властивості
   };
 }
 
@@ -224,54 +224,54 @@ let user = makeUser("John", 30);
 alert(user.name); // John
 ```
 
-In the example above, properties have the same names as variables. The use-case of making a property from a variable is so common, that there's a special *property value shorthand* to make it shorter.
+У наведеному вище прикладі властивості мають ті ж назви, що і змінні. Випадки використання властивості зі змінної настільки поширені, що існує спеціальне *скорочення значень властивостей*.
 
-Instead of `name:name` we can just write `name`, like this:
+Замість `name:name` ми можемо написати просто `name`, наприклад:
 
 ```js
 function makeUser(name, age) {
 *!*
   return {
-    name, // same as name: name
-    age   // same as age: age
+    name, // теж саме, що і name: name
+    age   // теж саме, що і age: age
     // ...
   };
 */!*
 }
 ```
 
-We can use both normal properties and shorthands in the same object:
+Ми можемо використовувати звичайний формат та скорочений в тому ж самому об'єкті:
 
 ```js
 let user = {
-  name,  // same as name:name
+  name,  // теж саме, що і name:name
   age: 30
 };
 ```
 
-## Property names limitations
+## Обмеження імен властивостей
 
-Property names (keys) must be either strings or symbols (a special type for identifiers, to be covered later).
+Імена властивостей (ключі) повинні бути або рядками, або символами (спеціальний тип для ідентифікаторів, який ми розберемо пізніше).
 
-Other types are automatically converted to strings.
+Інші типи автоматично перетворюються на рядки.
 
-For instance, a number `0` becomes a string `"0"` when used as a property key:
+Наприклад, число `0` перетворюється на рядок `"0"`, коли використовується у якості імені властивості:
 
 ```js run
 let obj = {
-  0: "test" // same as "0": "test"
+  0: "test" // теж саме, що і "0": "test"
 };
 
-// both alerts access the same property (the number 0 is converted to string "0")
+// обидва сповіщення отримують доступ до однієї і тієї ж властивості (число 0 перетворюється на рядок "0")
 alert( obj["0"] ); // test
-alert( obj[0] ); // test (same property)
+alert( obj[0] ); // test (та ж сама властивість)
 ```
 
-**Reserved words are allowed as property names.**
+**Зарезервовані слова можна використовувати у якості імен властивостей.**
 
-As we already know, a variable cannot have a name equal to one of language-reserved words like "for", "let", "return" etc.
+Як ми вже знаємо, змінна не може мати ім'я, яке зарезервоване самою мовою, наприклад "for", "let", "return" і т.д.
 
-But for an object property, there's no such restriction. Any name is fine:
+Але на ім'я властивості це обмеження не поширюється. Будь-яке ім'я підійде:
 
 ```js run
 let obj = {
@@ -283,52 +283,52 @@ let obj = {
 alert( obj.for + obj.let + obj.return );  // 6
 ```
 
-We can use any string as a key, but there's a special property named `__proto__` that gets special treatment for historical reasons.
+Ми можемо використовувати будь-який рядок як ключ, але є спеціальна властивість з назвою `__proto__`, яке обробляється по особливому з історичних причин.
 
-For instance, we can't set it to a non-object value:
+Наприклад, ми не можемо встановити значення, що не є об'єктом:
 
 ```js run
 let obj = {};
-obj.__proto__ = 5; // assign a number
-alert(obj.__proto__); // [object Object] - the value is an object, didn't work as intended
+obj.__proto__ = 5; // призначити число
+alert(obj.__proto__); // [object Object] - значення є об'єктом, тобто не працює як задумано
 ```
 
-As we see from the code, the assignment to a primitive `5` is ignored.
+Як ми бачимо з коду, призначення примітиву `5` ігнорується.
 
-The nature of `__proto__` will be revealed in detail later in the chapter [](info:prototype-inheritance).
+Детальніше про властивість `__proto__` буде розглянуто у главі [](info:prototype-inheritance).
 
-As for now, it's important to know that such behavior of `__proto__` can become a source of bugs and even vulnerabilities if we intend to store user-provided keys in an object.
+Поки що, важливо знати, що така поведінка `__proto__` може стати причиною дефектів або навіть вразливостей, якщо ми будемо дозволяти користувачам зберігати довільні ключі в об'єкті.
 
-The problem is that a visitor may choose `__proto__` as the key, and the assignment logic will be ruined (as shown above).
+Проблема полягає в тому, що користувач може вибрати в якості ключа "__proto__", і логіка призначення буде зруйнована (як показано вище).
 
-There are two workarounds for the problem:
-1. Modify the object's behavior to treat `__proto__` as a regular property. We'll learn how to do it in the chapter [](info:prototype-methods).
-2. Using [Map](info:map-set) data structure which supports arbitrary keys. We'll learn it in the chapter <info:map-set>.
+Існує два способи вирішення проблеми:
+1. Змінити поведінку об'єкта, щоб трактувати `__proto__` як звичайну властивість. Ми дізнаємось, як це зробити в главі [](info:prototype-methods).
+2. Використовувати структуру даних [Map](info:map-set), яка підтримує довільні імена властивостей. Ми розглянемо її у главі <info:map-set>.
 
-## Property existence test, "in" operator
+## Перевірка на існування властивості, оператор "in"
 
-A notable objects feature is that it's possible to access any property. There will be no error if the property doesn't exist! Accessing a non-existing property just returns `undefined`. It provides a very common way to test whether the property exists -- to get it and compare vs undefined:
+Характерною особливістю об'єктів є те, що можна отримати доступ до будь-якої властивості. Помилки не буде, якщо властивість не існує! При доступі до неіснуючої властивості просто повертається `undefined`. Порівняння властивості з `undefined` є дуже поширеним способом перевірки існування властивості:
 
 ```js run
 let user = {};
 
-alert( user.noSuchProperty === undefined ); // true means "no such property"
+alert( user.noSuchProperty === undefined ); // true означає, що "властивості не існує"
 ```
 
-There also exists a special operator `"in"` to check for the existence of a property.
+Є також спеціальний оператор `"in"`, що перевіряє наявність властивості:
 
-The syntax is:
+Синтаксис є наступним:
 ```js
 "key" in object
 ```
 
-For instance:
+Наприклад:
 
 ```js run
 let user = { name: "John", age: 30 };
 
-alert( "age" in user ); // true, user.age exists
-alert( "blabla" in user ); // false, user.blabla doesn't exist
+alert( "age" in user ); // true, user.age існує
+alert( "blabla" in user ); // false, не має властивості user.blabla
 ```
 
 Please note that on the left side of `in` there must be a *property name*. That's usually a quoted string.
